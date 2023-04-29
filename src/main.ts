@@ -1,12 +1,12 @@
 import { Engine } from "webgl-engine";
 import "./app.css";
 import App from "./App.svelte";
-import { InitialScene } from "./scenes/initial";
+import { MapScene } from "./scenes/map";
 
 let engine = new Engine<unknown>();
 window["gameEngine"] = engine;
 
-engine.addScene(InitialScene);
+engine.addScene(MapScene);
 
 function draw() {
   engine.draw();
