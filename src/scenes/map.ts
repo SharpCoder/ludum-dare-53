@@ -1,11 +1,14 @@
 import { Scene } from "webgl-engine";
+import { generateMap } from "../mapgen";
 import { drawFactory } from "../objects/factory";
+import { drawPlanet } from "../objects/planet";
 import { createSpawner } from "../objects/spawner";
 import { Retro2DShader } from "../shaders/retro2d";
 import { StarboxShader } from "../shaders/starbox";
 
 // const obj = drawBox(0, 0, 100, 100);
 const factory = drawFactory();
+const gameWorld = generateMap();
 
 export const MapScene = new Scene<unknown>({
   title: "map",
@@ -16,6 +19,12 @@ export const MapScene = new Scene<unknown>({
     MapScene.addObject(factory);
     MapScene.addObject(spawner);
 
+    // Spawn all the map elmenets
+    for (const element of gameWorld) {
+      if (element.type === "planet") {
+        MapScene.addObject(drawPlanet(element));
+      }
+    }
     // initClickDrag(engine);
 
     // MapScene.addObject(lineTo(100, 100, 200, 200));
