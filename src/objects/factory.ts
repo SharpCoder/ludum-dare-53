@@ -1,5 +1,6 @@
 import { rads } from "webgl-engine";
 import { container, drawArc, drawBox } from "../drawing";
+import { useMouse } from "../hooks/useMouse";
 
 export function drawFactory() {
   const radius = 50;
@@ -12,11 +13,11 @@ export function drawFactory() {
   factory.children.push(target);
 
   target.update = function (time_t, engine) {
-    const cx = engine.canvas.clientWidth / 2;
-    const cy = engine.canvas.clientHeight / 2;
-    const mx = engine.mousex - cx;
-    const my = engine.mousey - cy;
-    const theta = Math.atan2(my, mx);
+    const { canvas } = engine;
+    const cx = canvas.clientWidth / 2;
+    const cy = -canvas.clientHeight / 2;
+
+    const theta = Math.atan2(engine.mousey + cy, engine.mousex - cx);
     const x = Math.cos(theta) * radius;
     const y = Math.sin(theta) * radius;
 

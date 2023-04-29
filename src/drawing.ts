@@ -2,7 +2,7 @@ import { Obj3d, rads, zeros } from "webgl-engine";
 
 export function container(): Obj3d {
   return {
-    vertexes: [0, 0],
+    vertexes: square(0, 0),
     position: zeros(),
     offsets: zeros(),
     rotation: zeros(),
@@ -15,10 +15,10 @@ export function container(): Obj3d {
 }
 
 export function square(w, h) {
-  const x1 = w / 2;
-  const x2 = -w / 2;
-  const y1 = h / 2;
-  const y2 = -h / 2;
+  const x1 = -w / 2;
+  const x2 = w / 2;
+  const y1 = -h / 2;
+  const y2 = h / 2;
 
   return [x1, y1, x2, y1, x2, y2, x1, y2, x1, y1, x2, y2];
 }
