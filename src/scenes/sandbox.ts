@@ -11,6 +11,7 @@ import {
 } from 'webgl-engine';
 import { drawCube } from '../drawing3d';
 import { initUseCamera, useCamera } from '../hooks/useCamera';
+import { generateWorldSegment } from '../worldgen';
 
 export const SandboxScene = new Scene<unknown>({
     title: 'sandbox',
@@ -44,17 +45,34 @@ fetch('/models/tree.obj')
     .then((file) => file.blob())
     .then((blob) => {
         loadModel(blob, '/models/tree.obj', 'obj').then((tree) => {
-            SandboxScene.addObject({
-                ...tree,
-                position: zeros(),
-                offsets: zeros(),
-                rotation: zeros(),
-                colors: Flatten(
-                    Repeat([255, 255, 255], tree.vertexes.length / 3)
-                ),
-                scale: [100, 100, 100],
-            });
+            const segments = generateWorldSegment();
+            for (const segment of segments) {
+                switch (segment.type) {
+                    case 'tree': {
+                        SandboxScene.addObject({
+                            ...tree,
+                            name: 'tree',
+                            hideWhenFarAway: true,
+                            position: segment.position,
+                            scale: [
+                                segment.scale[0],
+                                segment.scale[1],
+                                segment.scale[2],
+                            ],
 
+                            colors: Flatten(
+                                Repeat(
+                                    [255, 255, 255],
+                                    tree.vertexes.length / 3
+                                )
+                            ),
+                            offsets: zeros(),
+                            rotation: zeros(),
+                        });
+                        break;
+                    }
+                }
+            }
             SandboxScene.status = 'ready';
         });
     });

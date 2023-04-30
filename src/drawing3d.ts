@@ -3,6 +3,7 @@ import { cuboid, Flatten, Obj3d, Repeat, zeros } from 'webgl-engine';
 export function drawCube({ x, y, z, w, h, d }) {
     const vertexes = cuboid(w, h, d);
     const obj: Obj3d = {
+        name: `cuboid_${w}_${h}_${d}`,
         vertexes: vertexes,
         offsets: [-w / 2, -h / 2, -d / 2],
         position: [x, y, z],

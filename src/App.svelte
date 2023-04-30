@@ -1,25 +1,26 @@
 <script lang="ts">
-  import type { Engine } from "webgl-engine";
+    import type { Engine } from 'webgl-engine';
 
-  let webglCanvas: HTMLCanvasElement;
-  let initialized = false;
+    let webglCanvas: HTMLCanvasElement;
+    let initialized = false;
 
-  $: {
-    const engine: Engine<unknown> = window["gameEngine"];
-    if (webglCanvas && engine && !initialized) {
-      initialized = true;
-      engine.initialize(webglCanvas);
-    } else if (webglCanvas) {
-      engine.setCanvas(webglCanvas);
+    $: {
+        const engine: Engine<unknown> = window['gameEngine'];
+        if (webglCanvas && engine && !initialized) {
+            initialized = true;
+            engine.initialize(webglCanvas);
+        } else if (webglCanvas) {
+            engine.setCanvas(webglCanvas);
+        }
     }
-  }
 </script>
 
 <canvas id="canvas" bind:this={webglCanvas} />
 
 <style>
-  #canvas {
-    width: 100%;
-    height: 100%;
-  }
+    #canvas {
+        width: 100%;
+        height: 100%;
+        flex-grow: 1;
+    }
 </style>
