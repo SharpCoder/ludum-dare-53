@@ -9,6 +9,7 @@ let ox = 0,
 export function initUseCamera(engine: Engine<unknown>) {}
 export function useCamera(engine: Engine<unknown>) {
     const { camera } = engine.activeScene;
+    const MAX_SPEED = 100;
 
     if (engine.keymap['w']) {
         vz = (vz + 1) * 1.01;
@@ -36,6 +37,19 @@ export function useCamera(engine: Engine<unknown>) {
         vx += 0.5;
     } else {
         vx = 0;
+    }
+
+    // Clamp
+    if (vx > 0) {
+        vx = Math.min(vx, MAX_SPEED);
+    } else {
+        vx = Math.max(vx, -MAX_SPEED);
+    }
+
+    if (vz > 0) {
+        vz = Math.min(vz, MAX_SPEED);
+    } else {
+        vz = Math.max(vz, -MAX_SPEED);
     }
 
     camera.position[0] += vx;

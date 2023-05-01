@@ -5,6 +5,7 @@ import { SandboxScene } from './scenes/sandbox';
 
 let engine = new Engine<unknown>();
 window['gameEngine'] = engine;
+engine.settings.zFar = 5000;
 
 engine.addScene(SandboxScene);
 
